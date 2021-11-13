@@ -1,0 +1,36 @@
+version: '3'
+services:
+  drone-server:
+    container_name: drone-server
+    image: drone/drone:latest
+    ports:
+      - 8080:80
+    volumes:
+      - db-data:/var/lib/drone/
+    restart: always
+    environment:
+      # - DRONE_OPEN=false
+      - DRONE_SERVER_HOST=http://droneci.ngrok.io # tunnel hostname
+      - DRONE_GITHUB_SERVER=https://github.com
+      - DRONE_ADMIN=derrickdunville
+      - DRONE_GITHUB_CLIENT_ID=Iv1.e6a243cdc86fdd91
+      - DRONE_GITHUB_CLIENT_SECRET=3d51b5dd8d9f9de1081c780e662c030988143cf4
+      - DRONE_SERVER_PROTO=http # tunnel adds https on top
+      - DRONE_RPC_SECRET=2b65700fa136244ad068b38dbed38106
+
+  drone-agent:
+    container_name: drone-agent
+    image: drone/agent:latest
+    command: agent
+    restart: always
+    depends_on:
+      - drone-server
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - DRONE_RPC_SERVER=https://droneci.ngrok.io
+      - DRONE_RPC_SECRET=2b65700fa136244ad068b38dbed38106
+      - DRONE_RUNNER_CAPACITY=2
+      - DRONE_RUNNER_NAME="local"
+volumes:
+  db-data:
