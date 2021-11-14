@@ -13,10 +13,11 @@ services:
       - DRONE_SERVER_HOST=http://droneci.ngrok.io # tunnel hostname
       - DRONE_GITHUB_SERVER=https://github.com
       - DRONE_ADMIN=derrickdunville
-      - DRONE_GITHUB_CLIENT_ID=Iv1.e6a243cdc86fdd91
-      - DRONE_GITHUB_CLIENT_SECRET=3d51b5dd8d9f9de1081c780e662c030988143cf4
+      - DRONE_GITHUB_CLIENT_ID=76be14cc9bf98b89099a
+      - DRONE_GITHUB_CLIENT_SECRET=05b1be5014d0cd5f7681cd67cd0f9fc6955e9155
       - DRONE_SERVER_PROTO=http # tunnel adds https on top
       - DRONE_RPC_SECRET=2b65700fa136244ad068b38dbed38106
+      - DRONE_USER_CREATE=username:derrickdunville,admin:true
 
   drone-agent:
     container_name: drone-agent
